@@ -1,7 +1,7 @@
 #include "LEX.h"
-
+#include "SyntaxAnalysis.h"
 int main() {
-//    freopen("ans.out","w",stdout);
+    freopen("tmp.out","w",stdout);
     vector<string> sym;
     vector<string> name;
     vector<string> ans;
@@ -12,12 +12,24 @@ int main() {
                            ">", ">=","+", "-", "*","/"};
     set<string> SSymbol = {"(", ")", ",", ";","."};
     LEX Lex_machine(KWord,OSymbol,SSymbol);
-    string fileName = "PL0_code.in";
-//    string fileName;
-    if(Lex_machine.lexical_analysis(fileName,ans,sym,name)){
-        for(auto & i: ans)
-            cout<<i<<endl;
+    string fileName = "tmp.in";
+    Lex_machine.lexical_analysis(fileName,ans,sym,name);
+    SyntaxAnalysis SyntaxAnalysis_machine(Lex_machine.getParam());
+    try {
+        SyntaxAnalysis_machine.handleProc();
     }
+    catch (handleError & e) {
+        e.printError();
+        exit(1);
+    }
+    SyntaxAnalysis_machine.printTree();
+    SyntaxAnalysis_machine.printTable();
+    SyntaxAnalysis_machine.printQuadruple();
+//    if(Lex_machine.lexical_analysis(fileName,ans,sym,name)){
+//        for(auto & i: ans)
+//            cout<<i<<endl;
+//        Lex_machine.printParam();
+//    }
 
     return 0;
 }

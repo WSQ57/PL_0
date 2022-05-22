@@ -15,6 +15,7 @@
 #include <vector>
 #include <set>
 #include <map>
+#include "AST.h"
 #define StateNum 10
 using namespace std;
 
@@ -23,6 +24,7 @@ private:
     set<string> key_word;   //关键词
     set<string> operator_symbol;    //运算符
     set<string> separator_symbol;   //分隔符
+    vector<wordTuple> param; // 用于语法分析
     map<char,int> JumpState[StateNum];    //状态转换表
     void InitJumpMap();
     int getNextState(int nowState,char ch, const string & word);
@@ -30,6 +32,8 @@ public:
     LEX(const set<string> & kWord, const set<string> & OSymbol, const set<string> & SSymbol);
     bool lexical_analysis(const string &fileName, vector<string> &ans,
                           vector<string> &sym, vector<string> &num);
+    void printParam();
+    vector<wordTuple> getParam() {return param;}
 };
 
 

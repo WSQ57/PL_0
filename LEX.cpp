@@ -101,15 +101,25 @@ bool LEX::lexical_analysis(const string &fileName, vector<string> &ans,
                     //数字
                     string outStr = "NUMBER " + to_string(stoi(word));
                     ans.push_back(outStr);
+                    param.emplace_back(to_string(stoi(word)),Number);
                 }
                 else if(nowState == 5){
                     //标识符
                     string outStr;
-                    if(key_word.find(word) == key_word.end()) outStr = "IDENTIFIER " + word;
-                    else outStr = word;
+                    if(key_word.find(word) == key_word.end()) {
+                        outStr = "IDENTIFIER " + word;
+                        param.emplace_back(word,Identifier);
+                    }
+                    else {
+                        outStr = word;
+                        param.emplace_back(word,KeyWord);
+                    }
                     ans.push_back(outStr);
                 }
-                else ans.push_back(word);
+                else {
+                    ans.push_back(word);
+                    param.emplace_back(word,Other);
+                }
                 word.clear();
                 nowState = nextState;
                 continue;
@@ -129,15 +139,25 @@ bool LEX::lexical_analysis(const string &fileName, vector<string> &ans,
                     //数字
                     string outStr = "NUMBER " + to_string(stoi(word));
                     ans.push_back(outStr);
+                    param.emplace_back(to_string(stoi(word)),Number);
                 }
                 else if(nowState == 5){
                     //标识符
                     string outStr;
-                    if(key_word.find(word) == key_word.end()) outStr = "IDENTIFIER " + word;
-                    else outStr = word;
+                    if(key_word.find(word) == key_word.end()) {
+                        outStr = "IDENTIFIER " + word;
+                        param.emplace_back(word,Identifier);
+                    }
+                    else {
+                        outStr = word;
+                        param.emplace_back(word,KeyWord);
+                    }
                     ans.push_back(outStr);
                 }
-                else ans.push_back(word);
+                else {
+                    ans.push_back(word);
+                    param.emplace_back(word,Other);
+                }
                 nowState = 0;
                 word.clear();
             }
@@ -145,4 +165,10 @@ bool LEX::lexical_analysis(const string &fileName, vector<string> &ans,
     }
 
     return true;
+}
+
+void LEX::printParam() {
+    for(auto & i:param){
+        cout<<i.name<<" "<<i.type<<endl;
+    }
 }
