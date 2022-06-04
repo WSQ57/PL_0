@@ -1,7 +1,10 @@
 #include "LEX.h"
 #include "SyntaxAnalysis.h"
+#include "interpreter.h"
+using namespace std;
 int main() {
     freopen("tmp.out","w",stdout);
+
     vector<string> sym;
     vector<string> name;
     vector<string> ans;
@@ -14,7 +17,9 @@ int main() {
     LEX Lex_machine(KWord,OSymbol,SSymbol);
     string fileName = "tmp.in";
     Lex_machine.lexical_analysis(fileName,ans,sym,name);
-    SyntaxAnalysis SyntaxAnalysis_machine(Lex_machine.getParam());
+    string fileOut = "tmp.out";
+    SyntaxAnalysis SyntaxAnalysis_machine(fileOut);
+    SyntaxAnalysis_machine.param = Lex_machine.getParam();
     try {
         SyntaxAnalysis_machine.handleProc();
     }
@@ -25,11 +30,14 @@ int main() {
     SyntaxAnalysis_machine.printTree();
     SyntaxAnalysis_machine.printTable();
     SyntaxAnalysis_machine.printQuadruple();
-//    if(Lex_machine.lexical_analysis(fileName,ans,sym,name)){
-//        for(auto & i: ans)
-//            cout<<i<<endl;
-//        Lex_machine.printParam();
-//    }
+    freopen("code.out","w",stdout);
+    SyntaxAnalysis_machine.printInstruction();
 
+    freopen("CON","w", stdout);
+    interpreter interpreter_machine(SyntaxAnalysis_machine.getTargetIns());
+    interpreter_machine.execute();
+
+    fclose(stdin);
+    fclose(stdout);
     return 0;
 }

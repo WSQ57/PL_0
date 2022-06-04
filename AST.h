@@ -10,7 +10,7 @@
 #include <iostream>
 #include "handleError.h"
 using namespace std;
-enum lexType{Number,Identifier,KeyWord,Producer,Other,CONST};
+enum lexType{Number,Identifier,KeyWord,Producer,Other,CONST,Variable};
 struct wordTuple{
     string name;
     lexType type;
@@ -24,15 +24,15 @@ public:
     string name;
     wordTuple val;
     vector<int> child;
-    explicit ASTNode(string name){
-        name = name;
+    explicit ASTNode(string name1){
+        name = std::move(name1);
     }
 };
 
 class AST {
 public:
     vector<ASTNode> AllNode; //所有节点
-    int addNode(ASTNode node, int fa = 0);
+    int addNode(ASTNode node, int fa = -1);
     int addNode(wordTuple & node, int fa = 0);
     void printTree(int tree);
     int size() const{

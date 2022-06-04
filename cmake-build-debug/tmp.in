@@ -1,38 +1,15 @@
-const k=10;
-var a, b, d, e, f;
-procedure f1;
-	var b,c;
-	procedure f2;
-		var c,d;
-		procedure f3;
-			var d,e;
-			begin
-                d:=1;
-			    d:=e;
-				call f1
-			end;
-		begin
-            c:=1;
-            d:=c
-		end;
-	procedure f4;
-		var c, e;
-		begin
-		    c:=1;
-			e:=c
-		end;
-	begin
-	    b:=1;
-	    c:=b
-	end;
+const a=10;
+var b,c;
+procedure p;
 begin
-d:=a*2;
-e:=a/3;
-while d<=e do
+  c:=b+a
+end;
+begin
+  read(b);
+  while b#0 do
     begin
-        f:=d+e;
-		call f1;
-        if d<e then d:=e
-    end;
-d:=2
+      call  p;
+      write(c);
+      read(b)
+    end
 end.

@@ -79,6 +79,12 @@ build CMakeFiles/PL_0.dir/SymbolTable.cpp.obj: CXX_COMPILER__PL_0_Debug D$:/c++/
   OBJECT_DIR = CMakeFiles\PL_0.dir
   OBJECT_FILE_DIR = CMakeFiles\PL_0.dir
 
+build CMakeFiles/PL_0.dir/interpreter.cpp.obj: CXX_COMPILER__PL_0_Debug D$:/c++/PL_0/interpreter.cpp || cmake_object_order_depends_target_PL_0
+  DEP_FILE = CMakeFiles\PL_0.dir\interpreter.cpp.obj.d
+  FLAGS = -g -std=gnu++11
+  OBJECT_DIR = CMakeFiles\PL_0.dir
+  OBJECT_FILE_DIR = CMakeFiles\PL_0.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target PL_0
@@ -87,7 +93,7 @@ build CMakeFiles/PL_0.dir/SymbolTable.cpp.obj: CXX_COMPILER__PL_0_Debug D$:/c++/
 #############################################
 # Link the executable PL_0.exe
 
-build PL_0.exe: CXX_EXECUTABLE_LINKER__PL_0_Debug CMakeFiles/PL_0.dir/main.cpp.obj CMakeFiles/PL_0.dir/LEX.cpp.obj CMakeFiles/PL_0.dir/AST.cpp.obj CMakeFiles/PL_0.dir/SyntaxAnalysis.cpp.obj CMakeFiles/PL_0.dir/SymbolTable.cpp.obj
+build PL_0.exe: CXX_EXECUTABLE_LINKER__PL_0_Debug CMakeFiles/PL_0.dir/main.cpp.obj CMakeFiles/PL_0.dir/LEX.cpp.obj CMakeFiles/PL_0.dir/AST.cpp.obj CMakeFiles/PL_0.dir/SyntaxAnalysis.cpp.obj CMakeFiles/PL_0.dir/SymbolTable.cpp.obj CMakeFiles/PL_0.dir/interpreter.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\PL_0.dir

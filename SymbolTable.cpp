@@ -5,7 +5,7 @@
 #include "SymbolTable.h"
 TableSet::TableSet() {
     tables.emplace_back(); // 新加一张空表
-    tables[0].emplace_back("main",Producer);
+    tables[0].emplace_back("main",Producer,0);
 }
 
 int TableSet::mkTable(int fa, const string& producer) {
@@ -22,15 +22,17 @@ int TableSet::mkTable(int fa, const string& producer) {
 }
 
 bool TableSet::enter(int tablePos, const std::string& name, lexType kind, int val) {
-    while(tables[tablePos].faLink != -1){
-        int tmp = tables[tablePos].findItem(name);
+    int posIter = tablePos;
+    while(posIter != -1){
+        int tmp = tables[posIter].findItem(name);
         if(tmp != -1) return false;
+        posIter = tables[posIter].faLink;
     }
     tables[tablePos].emplace_back(name,kind,val);
     return true;
 }
 
-pair<int,int> TableSet::lookup(int tablePos, std::string name) {
+pair<int,int> TableSet::lookup(int tablePos, const std::string& name) {
     pair<int,int> ans; // first为表下标，second为项下标
     int nowPos = tablePos;
     while(nowPos != -1){
@@ -46,6 +48,7 @@ pair<int,int> TableSet::lookup(int tablePos, std::string name) {
     return ans;
 }
 
+
 void TableSet::backPatchProc(int tablePos, int nxq) {
     // 回填程序的四元式
     tables[tablePos].OneTable[0].val = nxq;
@@ -55,7 +58,7 @@ void TableSet::backPatchProc(int tablePos, int nxq) {
     int a = tables[fa].findItem(name);
     if(tables[fa].OneTable[a].kind == Producer)
         tables[fa].OneTable[a].val = nxq;
-    throw handleError("回填程序四元式未找到");
+    else throw handleError("回填程序四元式未找到");
 }
 
 TableItem TableSet::getData(int tableNum,int pos) {
@@ -68,4 +71,12 @@ void TableSet::print() {
         for(const auto& a:x.OneTable)
             cout<<a.name<<" "<<a.kind<<" "<<a.val<<" "<<a.address<<endl;
     }
+}
+
+int TableSet::getLevelDiff(int table1, int table2) {
+    return tables[table2].level - tables[table1].level;
+}
+
+int TableSet::getVarNum(int tablePos) {
+    return tables[tablePos].variableNum;
 }

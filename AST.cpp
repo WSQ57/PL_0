@@ -6,7 +6,7 @@
 int AST::addNode(ASTNode node, int fa) {
     AllNode.emplace_back(node); //  加入新节点
     // 父节点连一条边到新节点
-    AllNode[fa].child.emplace_back(AllNode.size() - 1);
+    if(fa >= 0) AllNode[fa].child.emplace_back(AllNode.size() - 1);
     return (int)AllNode.size() - 1;
 }
 
