@@ -66,10 +66,11 @@ TableItem TableSet::getData(int tableNum,int pos) {
 }
 
 void TableSet::print() {
+    ofstream out("nameTable.out");
     for(const auto& x:tables){
-        cout<<"============================================"<<endl;
+        out<<"============================================"<<endl;
         for(const auto& a:x.OneTable)
-            cout<<a.name<<" "<<a.kind<<" "<<a.val<<" "<<a.address<<endl;
+            out<<a.name<<" "<<a.kind<<" "<<a.val<<" "<<a.address<<endl;
     }
 }
 

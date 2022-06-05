@@ -8,6 +8,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <fstream>
 #include "handleError.h"
 using namespace std;
 enum lexType{Number,Identifier,KeyWord,Producer,Other,CONST,Variable};
@@ -31,7 +32,12 @@ public:
 
 class AST {
 public:
+    AST(){
+        out.open("AST.out");
+    }
+    ~AST(){out.close();}
     vector<ASTNode> AllNode; //所有节点
+    ofstream out;
     int addNode(ASTNode node, int fa = -1);
     int addNode(wordTuple & node, int fa = 0);
     void printTree(int tree);

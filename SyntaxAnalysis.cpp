@@ -8,11 +8,10 @@
 
 using namespace std;
 
-SyntaxAnalysis::SyntaxAnalysis(string fileName) { // NOLINT
+SyntaxAnalysis::SyntaxAnalysis() { // NOLINT
     nxq = 0;
     paramPos = 0;
     tmpCount = 0;
-    file = std::move(fileName);
 }
 
 // <程序>→<分程序>.
@@ -45,7 +44,7 @@ void SyntaxAnalysis::handleSubProc(int tablePos, int fa, int depth) { // NOLINT
     if (param[paramPos].name == "PROCEDURE") {
         DeclareProcedure(tablePos, depth,pos);
     }
-    // 待定
+
     nameTable.backPatchProc(tablePos,nxq); // 回填子程序四元式地址
 
     nameTable.tables[tablePos].OneTable[0].address = instruction.size();
@@ -329,7 +328,7 @@ void SyntaxAnalysis::handleIf(int tablePos, int fa) { // NOLINT
     SyntaxTree.addNode(param[paramPos++],pos); // 加入THEN
     handleSentence(tablePos,pos);
     backPatch(falseList, nxq);
-    instruction.backPatch(pos,instruction.size());
+    instruction.backPatch(tmpPos,instruction.size());
 }
 // <条件> → <表达式><关系运算符><表达式> | odd<表达式>
 void SyntaxAnalysis::handleCondition(int tablePos, int fa) {
@@ -383,7 +382,6 @@ void SyntaxAnalysis::handleWhile(int tablePos, int fa) { // NOLINT
 
     int tmpInstPos =  instruction.size();
     instruction.push("JPC",0,0); // 等待回填
-
 
     int trueList = attribute_stack.top().trueList;
     int falseList = attribute_stack.top().falseList;
@@ -541,10 +539,13 @@ void SyntaxAnalysis::printTable() {
 }
 
 void SyntaxAnalysis::printQuadruple() {
+    ofstream out("Quadruple.out");
     int cnt = 100;
     for(const auto& x:quadruple){
-        cout<<cnt++<<" ("<<x.op<<","<<x.arg1<<","<<x.arg2<<","<<x.result<<")"<<endl;
+        if(x.op[0] == 'j') out<<cnt++<<" ("<<x.op<<","<<x.arg1<<","<<x.arg2<<","<<stoi(x.result) + 100<<")"<<endl;
+        else out<<cnt++<<" ("<<x.op<<","<<x.arg1<<","<<x.arg2<<","<<x.result<<")"<<endl;
     }
+    out.close();
 }
 
 void SyntaxAnalysis::printInstruction() {

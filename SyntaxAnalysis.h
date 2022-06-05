@@ -8,6 +8,7 @@
 #include "targetIns.h"
 #include <stack>
 #include <utility>
+#include <fstream>
 using namespace std;
 
 struct attribute{
@@ -47,16 +48,15 @@ private:
     int nxq;
     int paramPos; // 遍历param
     int tmpCount; // 声名临时变量的下标
-    string file;
 public:
-    vector<wordTuple> param;
     map<string,int> operatorSymbol{
             {"ODD",1},{"=",2},{"#",3},{"<",4},
             {"<=",5},{">",6},{">=",7},{"@",8},
             {"+",9},{"-",10},{"*",11},{"/",12},
             {"READ",13},{"WRITE",14}
     };
-    explicit SyntaxAnalysis(string fileName);
+    vector<wordTuple> param;
+    explicit SyntaxAnalysis();
     void handleProc();
     void handleSubProc(int tablePos, int fa, int depth);
     void DefineConst(int tablePos, int fa);

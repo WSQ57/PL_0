@@ -9,6 +9,7 @@
 #include <utility>
 #include <vector>
 #include <map>
+#include <fstream>
 using namespace std;
 struct formatInstruction{
     string f;
@@ -51,9 +52,10 @@ public:
         return (int)code.size();
     }
     void print(){
+        ofstream out("instruction.out");
         int count = 0;
         for(auto & i:code){
-            cout<<count++<<" "<<i.f<<" "<<i.l<<" "<<i.a<<endl;
+            out<<count++<<" "<<i.f<<" "<<i.l<<" "<<i.a<<endl;
         }
     }
     int backPatch(int i,int addr){

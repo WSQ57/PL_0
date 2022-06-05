@@ -41,7 +41,7 @@ void LEX::InitJumpMap() {
     //状态6
     for(char i = 32; i <= 126; i++) JumpState[6][i] = 10;
     for(char i = '0'; i <= '9'; i++) JumpState[6][i] = 6;
-    for(char i = 'A'; i <= 'Z'; i++) JumpState[6][i] = 9;   //数字开头不可字幕
+    for(char i = 'A'; i <= 'Z'; i++) JumpState[6][i] = 9;   //数字开头不可字母
     //状态7
     for(char i = 32; i <= 126; i++) JumpState[7][i] = 10;
     //状态8
@@ -58,8 +58,7 @@ int LEX::getNextState(int nowState, char ch, const string & word) {
     }
 }
 
-bool LEX::lexical_analysis(const string &fileName, vector<string> &ans,
-                           vector<string> &sym, vector<string> &num) {
+bool LEX::lexical_analysis(const string &fileName, vector<string> &sym, vector<string> &num) {
     //文件读取
     stringstream oss;
     if(!fileName.empty()) {
@@ -128,7 +127,7 @@ bool LEX::lexical_analysis(const string &fileName, vector<string> &ans,
             nowState = nextState;
         }
 
-        if(!word.empty()){  //遇到空格
+        if(!word.empty()){
             nextState = getNextState(nowState,' ',word);
             if(nextState == 9){
                 cout<<"Lexical Error\n";
@@ -168,7 +167,16 @@ bool LEX::lexical_analysis(const string &fileName, vector<string> &ans,
 }
 
 void LEX::printParam() {
+    out.open("lex.out");
     for(auto & i:param){
-        cout<<i.name<<" "<<i.type<<endl;
+        out<<i.name<<" "<<i.type<<endl;
     }
+    out.close();
+}
+
+void LEX::printAns() {
+    out.open("lex.out");
+    for(auto & i:ans)
+        out<<i<<endl;
+    out.close();
 }

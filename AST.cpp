@@ -21,19 +21,20 @@ int AST::addNode(wordTuple &node, int fa) {
 }
 
 void AST::printTree(int tree)  { // NOLINT
+
     int num = (int)AllNode[tree].child.size();
     if(!num){   //  叶子节点
-        std::cout<<AllNode[tree].name;
+        out<<AllNode[tree].name;
     }
     else{ // 内部节点
-        std::cout<<AllNode[tree].name<<"(";
+        out<<AllNode[tree].name<<"(";
         for(int i = 0; i < AllNode[tree].child.size(); i++){
             // 遍历所有的孩子
             printTree(AllNode[tree].child[i]);
             if (i < AllNode[tree].child.size() - 1)
-                std::cout<<",";
+                out<<",";
         }
-        std::cout<<")";
+        out<<")";
     }
-    if(!tree) std::cout<<"\n";
+    if(!tree) out<<"\n";
 }
